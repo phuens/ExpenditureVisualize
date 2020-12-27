@@ -27,20 +27,35 @@ def main():
 	data["debit"] = data.debit.astype('float64')
 	data["credit"] = data.credit.astype('float64')
 	data["balance"] = data.balance.astype('float64')
-
+	data["date"] = pd.to_datetime(data['date'])
+	data = data.sort_values(by=['date'])
+	
+	print("-------------------------------------------------------")
+	print(data["date"])
+	print("-------------------------------------------------------")
+	print(data.dtypes)
 	print("-------------------------------------------------------")
 	print("Expenditure: \n{}".format(data["debit"].describe()))
 	print("-------------------------------------------------------")
 	print("Income: \n{}".format(data["credit"].describe()))
 	print("-------------------------------------------------------")
 
-	visualization(data)
+	dailyExpenditure(data)
+	categoricalExpenditure(data)
 
-def visualization(data): 
+def dailyExpenditure(data):
 	# print(data)
 	df = data
-	fig = px.scatter(df, x=data.date, y=data.debit)
+	fig = px.scatter(df, x="date", y="debit", hover_data=['category', 'item', 'date', 'debit', 'balance'])
 	fig.show()
+
+def categoricalExpenditure(data): 
+	# print(data)	
+	df = data
+	fig = px.bar(df, x="category", y="debit", hover_data=['category', 'item', 'date', 'debit', 'balance'])
+	fig.show()
+
+
 
 if __name__ == '__main__':
 	main()
