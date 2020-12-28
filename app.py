@@ -1,7 +1,7 @@
 import pandas as pd 
 import os 
 import plotly.express as px
-
+import datetime
 
 def main(): 
 	final_csv = [] 
@@ -22,39 +22,51 @@ def main():
 
 	data = pd.concat(final_csv, axis=0, sort=False) 
 	data.columns = ["date", "journal", "action", "to", "category", "item", "debit", "credit", "balance"] #set the column headers
-	data.to_csv("Data/final/final_data.csv") #write the appended data to a csv file.
-
 	data["debit"] = data.debit.astype('float64')
 	data["credit"] = data.credit.astype('float64')
 	data["balance"] = data.balance.astype('float64')
 	data["date"] = pd.to_datetime(data['date'])
+	data['day_of_week'] = data['date'].dt.day_name()
+	data["date"] = pd.to_datetime(data['date']).dt.date
 	data = data.sort_values(by=['date'])
+	data.to_csv("Data/final/final_data.csv") #write the appended data to a csv file.
+
 	
-	print("-------------------------------------------------------")
-	print(data["date"])
-	print("-------------------------------------------------------")
-	print(data.dtypes)
-	print("-------------------------------------------------------")
-	print("Expenditure: \n{}".format(data["debit"].describe()))
-	print("-------------------------------------------------------")
-	print("Income: \n{}".format(data["credit"].describe()))
-	print("-------------------------------------------------------")
+	print("----------------------\n" , data.dtypes, "\n----------------------")
 
 	dailyExpenditure(data)
 	categoricalExpenditure(data)
 
-def dailyExpenditure(data):
-	# print(data)
-	df = data
-	fig = px.scatter(df, x="date", y="debit", hover_data=['category', 'item', 'date', 'debit', 'balance'])
+def dailyExpenditure(data):	
+	start_date , end_date = get_dates()
+	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+	fig = px.scatter(df, x="date", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
 	fig.show()
 
 def categoricalExpenditure(data): 
-	# print(data)	
-	df = data
-	fig = px.bar(df, x="category", y="debit", hover_data=['category', 'item', 'date', 'debit', 'balance'])
+	start_date , end_date = get_dates()
+	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+	fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
 	fig.show()
 
+# def categoricalDaysExpenditure(data):
+# 	start_date , end_date = get_dates()
+# 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+# 	fig = px.bar(df, x="sex", y="total_bill", color="smoker", barmode="group",
+#              facet_row="time", facet_col="day",
+#              category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+#                               "time": ["Lunch", "Dinner"]})
+
+# 	fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
+# 	fig.show()
+
+
+def get_dates(): 
+	start_date ='2020-01-01'
+	end_date = '2020-12-30'
+	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+	end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+	return start_date , end_date
 
 
 if __name__ == '__main__':
