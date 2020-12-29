@@ -9,6 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 </head>
 
+
 <body>
   <h1> About Flask </h1>
   <p> Flask is a micro web framework written in Python. </p>
@@ -18,7 +19,6 @@
     adwdawdawdawdaw
   </p>
   <div class="chart" id="bargraph">
-    <h3> dsfjhdsjfhjsdf </h3>
     <script>
       var graphs = {{ plot | safe}};
       Plotly.plot('bargraph', graphs, {});

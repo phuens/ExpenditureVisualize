@@ -2,34 +2,34 @@ from flask import Flask, render_template
 import pandas as pd 
 import os 
 import plotly.express as px
+import plotly
 import datetime
+import json
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
     data = readData()
-    categoricalDaysExpenditure = categoricalDaysExpenditure(data)
-    return render_template('home.html', plot= categoricalDaysExpenditure)
+    category_plot = categoricalDaysExpenditure(data)
+    return render_template('home.html', plot=category_plot)
     # return render_template("home.html")
 
 def readData():
-	final_csv = [] 
-	entries = os.listdir("./static/data/csv/")
-	for i in entries: 
-		name, extension = os.path.splitext(csv_path) #check if csv file
-		if (extension == ".csv"): 
-            csv_path = os.path.join("./static/data/csv/", i ) #define the path for the csv files
-			solo_csv = pd.read_csv(csv_path,index_col=False, header=None, engine='python') # return a panda data frame, engine=python required for unicode issue
-			solo_csv[6] = solo_csv[6].str.replace('DR','').str.replace(",", '') #remove the string DR from DEBIT
-			solo_csv[7] = solo_csv[7].str.replace('CR','').str.replace(",", '') #remove the string CR from CREDIT
-			solo_csv[8] = solo_csv[8].str.replace('CR','').str.replace(",", '') #remove the string CR from BALANCE
-			final_csv.append(solo_csv) #append the csv files one after another. 
-		
-		else: 
-			print("file {} not a csv ".format(csv_path))
-
-		return createDataFrame(final_csv)
+    final_csv = []
+    entries = os.listdir("./static/data/csv/")
+    for i in entries:
+        csv_path = os.path.join("./static/data/csv/", i ) #define the path for the csv files
+        name, extension = os.path.splitext(csv_path) #check if csv file
+        if (extension == ".csv"):
+            solo_csv = pd.read_csv(csv_path,index_col=False, header=None, engine='python') # return a panda data frame, engine=python required for unicode issue
+            solo_csv[6] = solo_csv[6].str.replace('DR','').str.replace(",", '') #remove the string DR from DEBIT
+            solo_csv[7] = solo_csv[7].str.replace('CR','').str.replace(",", '') #remove the string CR from CREDIT
+            solo_csv[8] = solo_csv[8].str.replace('CR','').str.replace(",", '') #remove the string CR from BALANCE
+            final_csv.append(solo_csv) #append the csv files one after another.
+        else:
+            print("file {} not a csv ".format(csv_path))
+        return createDataFrame(final_csv)
 	
 def createDataFrame(final_csv): 
 	data = pd.concat(final_csv, axis=0, sort=False) 
@@ -41,7 +41,7 @@ def createDataFrame(final_csv):
 	data['day'] = data['date'].dt.day_name()
 	data["date"] = pd.to_datetime(data['date']).dt.date
 	data = data.sort_values(by=['date'])
-	data.to_csv("Data/final/final_data.csv") #write the appended data to a csv file.
+	data.to_csv("./static/data/final/final_data.csv") #write the appended data to a csv file.
 	print("----------------------\n" , data.dtypes, "\n----------------------")
 
 	return data
@@ -51,7 +51,8 @@ def categoricalDaysExpenditure(data):
     start_date , end_date = get_dates()
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     df = data.loc[(data['category'] != "FAMILY") & (data['category'] != "SALARY")& (data['category'] != "CREDIT")]
-    fig = [px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit")]
+    fig = px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit")
+    fig.show()
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
