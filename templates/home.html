@@ -18,12 +18,31 @@
     LinkedIn, and the community web page for Flask itself.
     adwdawdawdawdaw
   </p>
+  <div class="chart" id="scatter">
+    <script>
+      var graphs = {{ daily_expenditure | safe}};
+      Plotly.plot('scatter', graphs, {});
+    </script>
+  </div>
+  <br><br><br><br>
+  <hr>
+  <br><br><br><br>
+  <div class="chart" id="expen">
+    <script>
+      var graphs = {{ categorical_expenditure_sum | safe}};
+      Plotly.plot('expen', graphs, {});
+    </script>
+  </div>
+  <br><br><br><br>
+  <hr>
+  <br><br><br><br>
   <div class="chart" id="bargraph">
     <script>
       var graphs = {{ plot | safe}};
       Plotly.plot('bargraph', graphs, {});
     </script>
   </div>
+
 
 </body>
 

@@ -12,8 +12,14 @@ app = Flask(__name__)
 def home():
     data = readData()
     category_plot = categoricalDaysExpenditure(data)
-    return render_template('home.html', plot=category_plot)
-    # return render_template("home.html")
+    daily_expen = dailyExpenditure(data)
+    categorical_expenditure_sum = categoricalExpenditure(data)
+    return render_template(
+        'home.html',
+        plot=category_plot, 
+        daily_expenditure = daily_expen, 
+        categorical_expenditure_sum = categorical_expenditure_sum)
+    
 
 def readData():
     final_csv = []
@@ -46,13 +52,25 @@ def createDataFrame(final_csv):
 
 	return data
 
+def dailyExpenditure(data):
+    start_date , end_date = get_dates()
+    df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+    fig = px.scatter(df, x="date", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
+
+def categoricalExpenditure(data):
+    start_date , end_date = get_dates()
+    df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+    fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
 
 def categoricalDaysExpenditure(data):
     start_date , end_date = get_dates()
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     df = data.loc[(data['category'] != "FAMILY") & (data['category'] != "SALARY")& (data['category'] != "CREDIT")]
     fig = px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit")
-    fig.show()
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
