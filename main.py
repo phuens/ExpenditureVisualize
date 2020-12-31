@@ -1,4 +1,4 @@
-from flask import Flask, render_template      
+from flask import Flask, render_template, request    
 import pandas as pd 
 import os 
 import plotly.express as px
@@ -6,20 +6,31 @@ import plotly
 import datetime
 import json
 
+# export FLASK_APP=main.py |||| RUN THIS BEFORE FLASK RUN
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        from_date = request.form['from_date']
+        to_date = request.form['to_date']
+        print("========================================================")
+        print("from date: {} and to date: {}".format(from_date, to_date))
+        print("========================================================")
+
+    else: 
+        from_date ='2020-01-01'
+        to_date = '2020-12-30'
+
     data = readData()
-    category_plot = categoricalDaysExpenditure(data)
-    daily_expen = dailyExpenditure(data)
-    categorical_expenditure_sum = categoricalExpenditure(data)
+    category_plot = categoricalDaysExpenditure(data, from_date, to_date)
+    daily_expen = dailyExpenditure(data,from_date, to_date)
+    categorical_expenditure_sum = categoricalExpenditure(data,from_date, to_date)
     return render_template(
-        'home.html',
-        plot=category_plot, 
-        daily_expenditure = daily_expen, 
-        categorical_expenditure_sum = categorical_expenditure_sum)
-    
+            'home.html',
+            plot=category_plot,
+            daily_expenditure = daily_expen,
+            categorical_expenditure_sum = categorical_expenditure_sum)
 
 def readData():
     final_csv = []
@@ -35,7 +46,8 @@ def readData():
             final_csv.append(solo_csv) #append the csv files one after another.
         else:
             print("file {} not a csv ".format(csv_path))
-        return createDataFrame(final_csv)
+    
+    return createDataFrame(final_csv)
 	
 def createDataFrame(final_csv): 
 	data = pd.concat(final_csv, axis=0, sort=False) 
@@ -52,34 +64,36 @@ def createDataFrame(final_csv):
 
 	return data
 
-def dailyExpenditure(data):
-    start_date , end_date = get_dates()
+def dailyExpenditure(data,from_date, to_date):
+    start_date , end_date = get_dates(from_date, to_date)
+    print("U&NDER Daily expen: from date: {} and to date: {}".format(start_date, end_date))
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+    print("the data being queried: \n#############\n {} \n ##################".format(df))
     fig = px.scatter(df, x="date", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
-def categoricalExpenditure(data):
-    start_date , end_date = get_dates()
+def categoricalExpenditure(data,from_date, to_date):
+    start_date , end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
-def categoricalDaysExpenditure(data):
-    start_date , end_date = get_dates()
+def categoricalDaysExpenditure(data,from_date, to_date):
+    start_date , end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     df = data.loc[(data['category'] != "FAMILY") & (data['category'] != "SALARY")& (data['category'] != "CREDIT")]
     fig = px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
-def get_dates(): 
-	start_date ='2020-01-01'
-	end_date = '2020-12-30'
-	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
-	end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
-	return start_date , end_date
+def get_dates(from_date, to_date):
+    from_date = datetime.datetime.strptime(from_date, '%Y-%m-%d').date()
+    to_date = datetime.datetime.strptime(to_date, '%Y-%m-%d').date()
+    print("THIS IS UNDER THE GET DATE FUNCTION: \n =================================")
+    print("from date: {} and the to date: {} \n =================================".format(from_date, to_date))
+    return from_date , to_date
 
 
 if __name__ == "__main__":

@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Expenditure</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Expenditure</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-</head>
+    <body>
+        <h1>About Flask</h1>
+        <p>Flask is a micro web framework written in Python.</p>
+        <hr />
+        <br /><br /><br /><br />
+        <hr />
+        <br /><br /><br /><br />
 
+        <div class="faily_expenditure_graph">
+            <form action="/" method="POST">
+                <label>From Date:</label>
+                <input type="date" name="from_date" />
+                <label>To Date:</label>
+                <input type="date" name="to_date" />
+                <input type="submit" value="Submit" />
+            </form>
+            <div class="chart" id="scatter">
+                <script>
+                    var graphs = {{ daily_expenditure | safe}};
+                    Plotly.plot('scatter', graphs, {});
+                </script>
+            </div>
+        </div>
 
-<body>
-  <h1> About Flask </h1>
-  <p> Flask is a micro web framework written in Python. </p>
-  <p>
-    Applications that use the Flask framework include Pinterest,
-    LinkedIn, and the community web page for Flask itself.
-    adwdawdawdawdaw
-  </p>
-  <div class="chart" id="scatter">
-    <script>
-      var graphs = {{ daily_expenditure | safe}};
-      Plotly.plot('scatter', graphs, {});
-    </script>
-  </div>
-  <br><br><br><br>
-  <hr>
-  <br><br><br><br>
-  <div class="chart" id="expen">
-    <script>
-      var graphs = {{ categorical_expenditure_sum | safe}};
-      Plotly.plot('expen', graphs, {});
-    </script>
-  </div>
-  <br><br><br><br>
-  <hr>
-  <br><br><br><br>
-  <div class="chart" id="bargraph">
-    <script>
-      var graphs = {{ plot | safe}};
-      Plotly.plot('bargraph', graphs, {});
-    </script>
-  </div>
-
-
-</body>
-
+        <br /><br /><br /><br />
+        <hr />
+        <br /><br /><br /><br />
+        <div class="chart" id="expen">
+            <script>
+                var graphs = {{ categorical_expenditure_sum | safe}};
+                Plotly.plot('expen', graphs, {});
+            </script>
+        </div>
+        <br /><br /><br /><br />
+        <hr />
+        <br /><br /><br /><br />
+        <div class="chart" id="bargraph">
+            <script>
+                var graphs = {{ plot | safe}};
+                Plotly.plot('bargraph', graphs, {});
+            </script>
+        </div>
+    </body>
 </html>
