@@ -1,11 +1,13 @@
 import pandas as pd 
 import os 
 import plotly.express as px
+import plotly.graph_objects as go
 import datetime
 
 def main(): 
 	data = readData()
-	dailyExpenditure(data)
+	dailySum(data)
+	# dailyExpenditure(data)
 	# categoricalExpenditure(data)
 	# categoricalDaysExpenditure(data)
 
@@ -42,10 +44,56 @@ def createDataFrame(final_csv):
 	data["date"] = pd.to_datetime(data['date']).dt.date
 	data = data.sort_values(by=['date'])
 	data.to_csv("./static/data/final/test_final.csv") #write the appended data to a csv file.
-	print("----------------------\n" , data.dtypes, "\n----------------------")
+	# print("----------------------\n" , data.dtypes, "\n----------------------")
 
 	return data
 
+def dailySum(data): 
+	start_date , end_date = get_dates()
+	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+	df = data.groupby('date').debit.agg([sum,min,len],)
+	df['average'] = df['sum']/df['len']
+	df['date'] = df.index #make the index column which happens to be the grouped date into a column. 
+	
+	
+	# fig = px.bar(df, x="date", y="sum",  mode='bar')
+
+	trace1  = go.Scatter(
+        mode='markers',
+        x = df['date'],
+        y = df['average'],
+        name="Average"
+    )
+
+	trace2 = go.Bar(
+        x = df['date'],
+        y = df['sum'],
+        name="Sum",
+        yaxis='y2',
+        marker_line_width=1.5,
+        marker_line_color='rgb(8,48,107)',
+        opacity=0.5
+    )
+	data = [trace1, trace2]
+
+	layout = go.Layout(
+		title_text='Sepnding',
+		yaxis=dict(
+			side = 'right'
+    	),
+		yaxis2=dict(
+			overlaying='y',
+			anchor='y',
+		)
+	)
+	fig = go.Figure(data=data, layout=layout)
+	fig.show()
+	print("----------------------\n" , df.dtypes, "\n----------------------")
+	
+	# fig.show()
+
+	
+	
 def dailyExpenditure(data):	
 	start_date , end_date = get_dates()
 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
