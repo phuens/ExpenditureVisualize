@@ -16,6 +16,11 @@
         <hr />
         <br /><br /><br /><br />
 
+        <
+
+        <br /><br /><br /><br />
+        <hr />
+        <br /><br /><br /><br />
         <div class="faily_expenditure_graph">
             <form action="/" method="POST">
                 <label>From Date:</label>
@@ -28,6 +33,12 @@
                 <script>
                     var graphs = {{ daily_expenditure | safe}};
                     Plotly.plot('scatter', graphs, {});
+                </script>
+            </div>
+            <div class="chart" id="daily_sum">
+                <script>
+                    var graphs = {{ daily_sum | safe}};
+                    Plotly.plot('daily_sum', graphs, {});
                 </script>
             </div>
         </div>
@@ -46,7 +57,7 @@
         <br /><br /><br /><br />
         <div class="chart" id="bargraph">
             <script>
-                var graphs = {{ plot | safe}};
+                var graphs = {{ category_plot | safe}};
                 Plotly.plot('bargraph', graphs, {});
             </script>
         </div>

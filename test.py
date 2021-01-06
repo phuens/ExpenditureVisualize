@@ -113,9 +113,7 @@ def dailySum(data):
 
 	
 	fig.show()
-	print("----------------------\n" , df.dtypes, "\n----------------------")
-	
-	# fig.show()
+
 
 	
 	
