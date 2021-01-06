@@ -51,27 +51,28 @@ def createDataFrame(final_csv):
 def dailySum(data): 
 	start_date , end_date = get_dates()
 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
-	df = data.groupby('date').debit.agg([sum,min,len],)
+	df = data.groupby('date').debit.agg([sum,min,len])
 	df['average'] = df['sum']/df['len']
 	df['date'] = df.index #make the index column which happens to be the grouped date into a column. 
 	
-	
-	# fig = px.bar(df, x="date", y="sum",  mode='bar')
+	# This is done so that values where average = sum do not  dusplay the average
+	for index, rows in df.iterrows(): 
+		if	rows["average"]==rows["sum"]: 
+			
+			df.at[index, 'average'] = None
 
 	trace1  = go.Scatter(
         mode='markers',
         x = df['date'],
         y = df['average'],
-        name="Average"
+        name="Average",
     )
-
 	trace2 = go.Bar(
         x = df['date'],
         y = df['sum'],
         name="Sum",
-        yaxis='y2',
-        marker_line_width=1.5,
-        marker_line_color='rgb(8,48,107)',
+        # marker_line_width=1.5,
+        # marker_line_color='rgb(8,48,107)',
         opacity=0.5
     )
 	data = [trace1, trace2]
@@ -79,14 +80,38 @@ def dailySum(data):
 	layout = go.Layout(
 		title_text='Sepnding',
 		yaxis=dict(
-			side = 'right'
+			side = 'left'
     	),
 		yaxis2=dict(
 			overlaying='y',
-			anchor='y',
-		)
+			anchor='x',
+		),
+		annotations=[
+            go.layout.Annotation(
+                text='* Values without avergae is because the average and sum are the same',
+                align='left',
+                showarrow=False,
+                xref='paper',
+                yref='paper',
+                y=1.0291,
+                x=1,
+				width=400,
+                bordercolor='gray',
+                borderwidth=1,
+				opacity=0.5
+            )
+        ]
 	)
 	fig = go.Figure(data=data, layout=layout)
+	fig.update_layout(legend=dict(
+		orientation="h",
+		yanchor="bottom",
+		y=1.025,
+		xanchor="right",
+		x=1
+	))
+
+	
 	fig.show()
 	print("----------------------\n" , df.dtypes, "\n----------------------")
 	
