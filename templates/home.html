@@ -12,54 +12,54 @@
         <h1>About Flask</h1>
         <p>Flask is a micro web framework written in Python.</p>
         <hr />
-        <br /><br /><br /><br />
         <hr />
         <br /><br /><br /><br />
 
-        <
+        <form action="/" method="POST">
+            <label>From Date:</label>
+            <input type="date" name="from_date" />
+            <label>To Date:</label>
+            <input type="date" name="to_date" />
+            <input type="submit" value="Submit" />
+        </form>
 
-        <br /><br /><br /><br />
-        <hr />
-        <br /><br /><br /><br />
-        <div class="faily_expenditure_graph">
-            <form action="/" method="POST">
-                <label>From Date:</label>
-                <input type="date" name="from_date" />
-                <label>To Date:</label>
-                <input type="date" name="to_date" />
-                <input type="submit" value="Submit" />
-            </form>
-            <div class="chart" id="scatter">
-                <script>
-                    var graphs = {{ daily_expenditure | safe}};
-                    Plotly.plot('scatter', graphs, {});
-                </script>
+        <div class="container parent-container">
+            <div class="row">
+                <div class="col-6 chart" id="_scatter_bar_daily_sum_and_average">
+                    <script>
+                        var graphs = {{ _scatter_bar_daily_sum_and_average | safe}};
+                        Plotly.plot('_scatter_bar_daily_sum_and_average', graphs, {});
+                    </script>
+                </div>
+
+                <div class="col-6 chart" id="_pie_days_expenditure_pie_chart">
+                    <script>
+                        var graphs = {{ _pie_days_expenditure_pie_chart | safe}};
+                        Plotly.plot('_pie_days_expenditure_pie_chart', graphs, {});
+                    </script>
+                </div>
+
+                <div class="col-6 chart" id="_bar_day_based_categorical_expenditure">
+                    <script>
+                        var graphs = {{ _bar_day_based_categorical_expenditure | safe}};
+                        Plotly.plot('_bar_day_based_categorical_expenditure', graphs, {});
+                    </script>
+                </div>
+
+                <div class="col-6 chart" id="_bar_categorical_sum_expenditure">
+                    <script>
+                        var graphs = {{ _bar_categorical_sum_expenditure | safe}};
+                        Plotly.plot('_bar_categorical_sum_expenditure', graphs, {});
+                    </script>
+                </div>
+
+                <div class="col-6 chart" id="_pie_categorical_sum_expenditure">
+                    <script>
+                        var graphs = {{ _pie_categorical_sum_expenditure | safe}};
+                        Plotly.plot('_pie_categorical_sum_expenditure', graphs, {});
+                    </script>
+                </div>
             </div>
-            <div class="chart" id="daily_sum">
-                <script>
-                    var graphs = {{ daily_sum | safe}};
-                    Plotly.plot('daily_sum', graphs, {});
-                </script>
-            </div>
-        </div>
-
-        <br /><br /><br /><br />
-        <hr />
-        <br /><br /><br /><br />
-        <div class="chart" id="expen">
-            <script>
-                var graphs = {{ categorical_expenditure_sum | safe}};
-                Plotly.plot('expen', graphs, {});
-            </script>
-        </div>
-        <br /><br /><br /><br />
-        <hr />
-        <br /><br /><br /><br />
-        <div class="chart" id="bargraph">
-            <script>
-                var graphs = {{ category_plot | safe}};
-                Plotly.plot('bargraph', graphs, {});
-            </script>
         </div>
     </body>
 </html>

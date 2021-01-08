@@ -6,10 +6,12 @@ import datetime
 
 def main(): 
 	data = readData()
-	dailySum(data)
+	# dailySum(data)
 	# dailyExpenditure(data)
 	# categoricalExpenditure(data)
-	# categoricalDaysExpenditure(data)
+	# daysExpenditureBarGraph(data)
+	categoricalExpenditurePieChart(data)
+	# daysExpenditurePieChart(data)
 
 def readData():
 	final_csv = [] 
@@ -129,17 +131,43 @@ def categoricalExpenditure(data):
 	fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
 	fig.show()
 
-def categoricalDaysExpenditure(data):
+def daysExpenditureBarGraph(data):
 	start_date , end_date = get_dates()
 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
-	df = data.loc[(data['category'] != "FAMILY") & (data['category'] != "SALARY")& (data['category'] != "CREDIT")]
+	# TODO:NEED TO REFACTOR THE BELOW CODE.
+	df = df.loc[ (df["category"] != "UNKNOWN") &(df["category"] != "FAMILY") &(df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
 	fig = px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit")
-	# fig.update_layout(yaxis=dict(range=[0,1100]))
+	fig.show()
+	
+def categoricalExpenditurePieChart(data):
+	start_date , end_date = get_dates()
+	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+	print(df)
+	# TODO:NEED TO REFACTOR THE BELOW CODE.
+	df = df.loc[ (df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
+	df = df.groupby('category').debit.agg([sum, len])
+	df["category_group"] = df.index
+	print(df)
+	fig = px.pie(df, values='sum', names='category_group', labels="category_group", title='Total spending by categories', hole=.3)
 	fig.show()
 
+
+def daysExpenditurePieChart(data):
+	day_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+	start_date,end_date = get_dates()
+	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
+	# TODO:NEED TO REFACTOR THE BELOW CODE.
+	df = df.loc[ (df["category"] != "UNKNOWN") &(df["category"] != "FAMILY") &(df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
+	df = df.groupby('day').debit.agg([sum, len]).reindex(day_of_the_week) 
+	df["day_of_week"] = df.index
+	fig = px.pie(df, values='sum', names='day_of_week', labels="day_of_week", title='Total spending by day of week.', hole=.3)
+	fig.show()
+
+
+
 def get_dates(): 
-	start_date ='2020-05-05'
-	end_date = '2020-07-05'
+	start_date ='2020-01-01'
+	end_date = '2020-12-31'
 	start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
 	end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
 	return start_date , end_date
