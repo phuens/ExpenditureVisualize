@@ -25,7 +25,7 @@ def home():
     else: 
         from_date ='2020-01-01'
         to_date = '2020-12-30'
-
+    
     data = readData()
     scatter_bar_daily_sum_and_average       = scatterbarDailySumAndAverage(data, from_date, to_date)
     pie_days_expenditure_pie_chart          = pieDaysExpenditurePieChart(data, from_date, to_date)

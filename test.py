@@ -1,16 +1,19 @@
+from flask import Flask, render_template, request    
 import pandas as pd 
 import os 
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly
 import datetime
+import json
 
 def main(): 
 	data = readData()
 	# dailySum(data)
-	# dailyExpenditure(data)
+	dailyExpenditure(data)
 	# categoricalExpenditure(data)
 	# daysExpenditureBarGraph(data)
-	categoricalExpenditurePieChart(data)
+	# categoricalExpenditurePieChart(data)
 	# daysExpenditurePieChart(data)
 
 def readData():
@@ -112,8 +115,6 @@ def dailySum(data):
 		xanchor="right",
 		x=1
 	))
-
-	
 	fig.show()
 
 
@@ -123,7 +124,8 @@ def dailyExpenditure(data):
 	start_date , end_date = get_dates()
 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
 	fig = px.scatter(df, x="date", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
-	fig.show()
+	# graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+	# print(graphJSON)
 
 def categoricalExpenditure(data): 
 	start_date , end_date = get_dates()
@@ -144,7 +146,7 @@ def categoricalExpenditurePieChart(data):
 	df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
 	print(df)
 	# TODO:NEED TO REFACTOR THE BELOW CODE.
-	df = df.loc[ (df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
+	df = df.loc[ (df["category"] != "UNKNOWN") &(df["category"] != "FAMILY") &(df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
 	df = df.groupby('category').debit.agg([sum, len])
 	df["category_group"] = df.index
 	print(df)
