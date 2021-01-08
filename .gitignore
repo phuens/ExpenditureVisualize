@@ -1,4 +1,4 @@
 *.DS_Store
 # python 
-venv
-__pycache__
+/venv
+/__pycache__
