@@ -41,7 +41,7 @@ def home():
     #         _bar_categorical_sum_expenditure        = bar_categorical_sum_expenditure,
     #         _pie_categorical_sum_expenditure        = pie_categorical_sum_expenditure)
     print("-----> {}".format(scatter_bar_daily_sum_and_average))
-    return pie_days_expenditure_pie_chart
+    return scatter_bar_daily_sum_and_average
 
 
 def readData():

@@ -2,11 +2,12 @@ import React from "react";
 import Plot from "react-plotly.js";
 import logo from "./logo.svg";
 import "./App.css";
-import Data from "./hooks/get_data";
+import Data from "./hook/get_data";
+
 function App() {
     // const [graphdata, setgraphdata] = useState(0);
     const [results, errorMessage] = Data();
-    console.log("===>", results.data);
+
     return (
         <div className='App'>
             <header className='App-header'>
@@ -17,7 +18,7 @@ function App() {
                 <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
                     Learn React
                 </a>
-                <Plot data={results} />
+                <Plot data={results.data} layout={results.layout} />
             </header>
         </div>
     );
