@@ -1,7 +1,7 @@
 import React from "react";
-import Profile from "../components/profile/drawer";
+import Drawer from "../components/drawer/drawer";
 function Dashboard() {
-    return <Profile />;
+    return <Drawer />;
 }
 
 export default Dashboard;
