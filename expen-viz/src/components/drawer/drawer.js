@@ -7,14 +7,13 @@ const userStyles = makeStyles({
         flexDirection: "column",
         position: "absolute",
         left: "0%",
-        width: "300px",
         height: "100%",
         backgroundColor: "red",
     },
 });
 export default function Drawer() {
     const classes = userStyles();
-    return <div className={classes.drawer}>sdkjhsfhshf</div>;
+    return <div>sdkjhsfhshf</div>;
 }
 
 // ONE WAY OF PASSING THE STYLES
