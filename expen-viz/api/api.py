@@ -32,16 +32,11 @@ def home():
     bar_day_based_categorical_expenditure   = barDayBasedCategoricalExpenditure(data, from_date, to_date)
     bar_categorical_sum_expenditure         = barCategoricalSumExpenditure(data, from_date, to_date)
     pie_categorical_sum_expenditure         = pieCategoricalSumExpenditure(data, from_date, to_date)
-    # scatter_daily_expenditure = scatterDailyExpenditure(data, from_date, to_date)
-    # return render_template(
-    #         'home.html',
-    #         _scatter_bar_daily_sum_and_average      = scatter_bar_daily_sum_and_average,
-    #         _pie_days_expenditure_pie_chart         = pie_days_expenditure_pie_chart,
-    #         _bar_day_based_categorical_expenditure  = bar_day_based_categorical_expenditure, 
-    #         _bar_categorical_sum_expenditure        = bar_categorical_sum_expenditure,
-    #         _pie_categorical_sum_expenditure        = pie_categorical_sum_expenditure)
-    print("-----> {}".format(scatter_bar_daily_sum_and_average))
-    return scatter_bar_daily_sum_and_average
+    
+    print("---> {} \n @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ {}".format(scatter_bar_daily_sum_and_average, pie_days_expenditure_pie_chart))
+    graphs = (scatter_bar_daily_sum_and_average, pie_days_expenditure_pie_chart,bar_day_based_categorical_expenditure,bar_categorical_sum_expenditure,pie_categorical_sum_expenditure)
+    graphs = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphs
 
 
 def readData():
@@ -181,8 +176,8 @@ def pieCategoricalSumExpenditure(data, from_date, to_date):
     df = df.groupby('category').debit.agg([sum, len])
     df["category_group"] = df.index
     fig = px.pie(df, values='sum', names='category_group', title='Total sum of spending based on Days of the week')
-    # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    # return graphJSON
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
     # fig = fig.replace(Figure({'data':)
 
 # 6

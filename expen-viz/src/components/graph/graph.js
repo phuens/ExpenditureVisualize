@@ -35,11 +35,41 @@ const useStyles = makeStyles((theme) => ({
 
 function Graph(props) {
     const [results, errorMessage] = Data();
+    let scatterbarDailySumAndAverage;
+    let pieDaysExpenditurePieChart;
+    let barDayBasedCategoricalExpenditure;
+    let barCategoricalSumExpenditure;
+    let pieCategoricalSumExpenditure;
+
+    if (results.length !== 0) {
+        scatterbarDailySumAndAverage = results[0];
+        pieDaysExpenditurePieChart = results[1];
+        barDayBasedCategoricalExpenditure = results[2];
+        barCategoricalSumExpenditure = results[3];
+        pieCategoricalSumExpenditure = results[4];
+    }
+
     const classes = useStyles();
-    return (
-        <Grid container className={classes.background}>
-            <Plot data={results.data} layout={results.layout} className={classes.width} />
-        </Grid>
+    return results.length !== 0 ? (
+        <>
+            <Grid container className={classes.background}>
+                <Plot data={scatterbarDailySumAndAverage.data} layout={scatterbarDailySumAndAverage.layout} className={classes.width} />
+            </Grid>
+            <Grid container className={classes.background}>
+                <Plot data={pieDaysExpenditurePieChart.data} layout={pieDaysExpenditurePieChart.layout} className={classes.width} />
+            </Grid>
+            <Grid container className={classes.background}>
+                <Plot data={barDayBasedCategoricalExpenditure.data} layout={barDayBasedCategoricalExpenditure.layout} className={classes.width} />
+            </Grid>
+            <Grid container className={classes.background}>
+                <Plot data={barCategoricalSumExpenditure.data} layout={barCategoricalSumExpenditure.layout} className={classes.width} />
+            </Grid>
+            <Grid container className={classes.background}>
+                <Plot data={pieCategoricalSumExpenditure.data} layout={pieCategoricalSumExpenditure.layout} className={classes.width} />
+            </Grid>
+        </>
+    ) : (
+        "LOADING"
     );
 }
 

@@ -8,7 +8,6 @@ const userStyles = makeStyles({
         position: "absolute",
         left: "0%",
         height: "100%",
-        backgroundColor: "red",
     },
 });
 export default function Drawer() {

@@ -8,7 +8,8 @@ const Data = () => {
     const searchApi = async () => {
         try {
             const response = await axios.get("/data", {});
-            setResults(response.data);
+            const result = [JSON.parse(response.data[0]), JSON.parse(response.data[1]), JSON.parse(response.data[2]), JSON.parse(response.data[3]), JSON.parse(response.data[4])];
+            setResults(result);
         } catch (err) {
             setErrorMessage("Something Went Wrong");
         }
