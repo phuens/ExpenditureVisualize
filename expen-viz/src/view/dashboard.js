@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
         padding: "50px",
     },
 }));
+
 function Dashboard() {
     const classes = useStyles();
     return (
-        <>
-            <Grid container className={classes.root} spacing={0}>
+        <div className={classes.root}>
+            <Grid container spacing={3}>
                 <Grid item xs={2} md={2} lg={2} sm={2} className={classes.drawer}>
                     <Drawer />
                 </Grid>
@@ -30,7 +31,7 @@ function Dashboard() {
                     <Graph />
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 }
 

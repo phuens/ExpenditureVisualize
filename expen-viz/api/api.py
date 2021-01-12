@@ -7,7 +7,9 @@ import plotly
 import datetime
 import json
 
-# TODO: need to update the daily sum graph based on the dates from user. 
+# TODO: 
+#   1. Need to update the daily sum graph based on the dates from user. 
+#   2. Need to make the graphs responsive. 
 # export FLASK_APP=main.py | RUN THIS BEFORE FLASK RUN
 app = Flask(__name__)
 
@@ -110,6 +112,7 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
 	)
     fig = go.Figure(data=data, layout=layout)
     fig.update_layout(legend=dict(orientation="h",yanchor="bottom",y=1.025,xanchor="right",x=1))
+    
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -129,6 +132,7 @@ def pieDaysExpenditurePieChart(data, from_date, to_date):
     df = df.groupby('day').debit.agg([sum, len]).reindex(day_of_the_week) 
     df["day_of_week"] = df.index
     fig = px.pie(df, values='sum', names='day_of_week', labels="day_of_week", title='Total spending by day of week.', hole=.3)
+    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -144,6 +148,7 @@ def barDayBasedCategoricalExpenditure(data, from_date, to_date):
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     df = df.loc[ (df["category"] != "UNKNOWN") &(df["category"] != "FAMILY") &(df["category"] != "RENT") &(df["category"] != "SALARY") &(df["category"] != "CREDIT") &(df["category"] != "COMPUTER MONITOR") &(df["category"] != "FURNITURE") &(df["category"] !="RETURN") &(df["category"] != "HALF YR.ANNUAL MAINT CHR")&(df["category"] != "INTEREST")]
     fig = px.bar(df, x="category", y="debit", barmode="group",facet_col="day",text="debit", title="Spending based on Days of the week by categories")
+    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -158,6 +163,7 @@ def barCategoricalSumExpenditure(data, from_date, to_date):
     start_date , end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     fig = px.bar(df, x="category", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
+    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -176,6 +182,7 @@ def pieCategoricalSumExpenditure(data, from_date, to_date):
     df = df.groupby('category').debit.agg([sum, len])
     df["category_group"] = df.index
     fig = px.pie(df, values='sum', names='category_group', title='Total sum of spending based on Days of the week')
+    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
     # fig = fig.replace(Figure({'data':)
@@ -190,6 +197,7 @@ def scatterDailyExpenditure(data, from_date, to_date):
     start_date , end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     fig = px.scatter(df, x="date", y="debit", labels={'debit':'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])
+    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
