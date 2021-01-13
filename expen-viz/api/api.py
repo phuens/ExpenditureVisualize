@@ -1,7 +1,7 @@
 """
-    Return all the graphs plotted and handle request from front end.
+Different graphs of various expenditure.
 
-    :return: template with all the grpahs.
+:return: graphs of various expen.
 """
 from flask import Flask, request
 import pandas as pd
