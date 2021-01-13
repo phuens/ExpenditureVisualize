@@ -1,18 +1,17 @@
-import React from "react";
-import { makeStyles, withStyles } from "@material-ui/core";
+import React from 'react';
+// import { makeStyles, withStyles } from '@material-ui/core';
 
-const userStyles = makeStyles({
-    drawer: {
-        display: "flex",
-        flexDirection: "column",
-        position: "absolute",
-        left: "0%",
-        height: "100%",
-    },
-});
+// const userStyles = makeStyles({
+//   drawer: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     position: 'absolute',
+//     left: '0%',
+//     height: '100%',
+//   },
+// });
 export default function Drawer() {
-    const classes = userStyles();
-    return <div>sdkjhsfhshf</div>;
+  return <div>This si where the profile will be</div>;
 }
 
 // ONE WAY OF PASSING THE STYLES

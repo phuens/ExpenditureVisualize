@@ -1,9 +1,9 @@
-import React from "react";
-import "./App.css";
-import Dashboard from "./view/dashboard";
+import React from 'react';
+import './App.css';
+import Dashboard from './view/dashboard';
 
 function App() {
-    return <Dashboard />;
+  return <Dashboard />;
 }
 
 export default App;

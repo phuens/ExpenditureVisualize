@@ -1,13 +1,25 @@
-language: python
-python:
-  - "3.6"
-# command to install dependencies
-install:
-  - python -m pip install --upgrade pip
-  - pip install -r requirements.txt
-  - pip install flake8
-  - pip install pydocstyle
-# command to run tests
-script:
-  - flake8
-  - pydocstyle
+# Set up matrix for multiple languages check.
+matrix:
+  include:
+    # Check for python 3.6.
+    - language: python
+      python: '3.6'
+      install:
+        # Use newest pip and install check tools.
+        - python -m pip install --upgrade pip
+        - pip install -r requirements.txt
+      script:
+        # Check styles.
+        - flake8
+        - pydocstyle
+
+    # Check for node_js 10.x.
+    - language: node_js
+      node_js: '15'
+      # Install dependencies.
+      install:
+        - cd ./expen-viz
+        - yarn install
+      # ESLint to check all files.
+      script:
+        - ./node_modules/.bin/eslint ./js/
