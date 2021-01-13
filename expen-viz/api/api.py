@@ -1,3 +1,8 @@
+"""
+    Return all the graphs plotted and handle request from front end.
+
+    :return: template with all the grpahs.
+"""
 from flask import Flask, request
 import pandas as pd
 import os
