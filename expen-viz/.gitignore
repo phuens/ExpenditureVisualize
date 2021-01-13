@@ -2,6 +2,9 @@
 # python
 /api/venv
 /api/__pycache__
+../__pycache__
+../.vscode
+*.pyc
 
 # dependencies
 /node_modules
