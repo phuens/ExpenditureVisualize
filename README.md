@@ -1,6 +1,7 @@
 # ExpenditureVisualize
 
-[![Build Status](https://travis-ci.com/phuens/ExpenditureVisualize.svg?branch=main)](https://travis-ci.com/phuens/ExpenditureVisualize)
+[![Build Status](https://travis-ci.com/phuens/ExpenditureVisualize.svg?branch=main)](https://travis-ci.com/phuens/ExpenditureVisualize) 
+<br>
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
 <b> Visualizing my everyday spending in hopes to see some pattern and hopefully make few improvements. </b>
