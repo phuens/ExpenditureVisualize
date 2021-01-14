@@ -99,6 +99,12 @@ def createDataFrame(final_csv):
     return data
 
 
+# summary
+def statSummary(data):
+    total_expenditure = data.debit.agg([sum])
+    print('this is the total expenditure: {}'.formart(total_expenditure))
+
+
 # graph1
 def scatterbarDailySumAndAverage(data, from_date, to_date):
     """
