@@ -41,7 +41,6 @@ const useStyles = makeStyles(() => ({
 
 function Graph() {
   const [results, errorMessage] = Data();
-  console.log('this be the errormessage: ', errorMessage);
   let scatterbarDailySumAndAverage;
   let pieDaysExpenditurePieChart;
   let barDayBasedCategoricalExpenditure;

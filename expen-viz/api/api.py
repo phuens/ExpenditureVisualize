@@ -49,6 +49,39 @@ def home():
     return graphs
 
 
+@app.route("/summary")
+def statSummary():
+    """
+    summary of different stats.
+
+    :return: different statistics
+    :parameter: data
+    """
+    data = readData()
+    data["date"] = pd.to_datetime(data['date'])  # convert to datetime
+    # Stat 1: Total Expenditure
+    total_expenditure = data.debit.sum()
+    # Stat 2: Total Earning
+    total_earning = data.credit.sum()
+    # Stat 3: Single Biggest expense
+    biggest_expenditure = data.loc[data["debit"] == data.debit.max()]
+    biggest_expenditure_amount = biggest_expenditure.debit
+    biggest_expenditure_category = biggest_expenditure.category
+    biggest_expenditure_item = biggest_expenditure.item
+    # Stat 4: most expensive month
+    max_month = data.groupby(pd.Grouper(key='date', freq='1M')).sum()
+    max_month['month'] = max_month.index
+    max_month = max_month.loc[max_month['debit'] == max_month.debit.max()]
+    max_month_name = max_month["month"].dt.strftime('%B')
+    max_month_amount = max_month.debit
+    summary_data = [total_expenditure,
+                    total_earning, biggest_expenditure_amount,
+                    biggest_expenditure_category, biggest_expenditure_item,
+                    max_month_name, max_month_amount]
+    summary_data = json.dumps(summary_data, cls=plotly.utils.PlotlyJSONEncoder)
+    return (summary_data)
+
+
 def readData():
     """
     Read clean and create a single csv containing all the transactions.
@@ -97,12 +130,6 @@ def createDataFrame(final_csv):
     data.to_csv("../data/final/final_data.csv")
     print("----------------------\n", data.dtypes, "\n----------------------")
     return data
-
-
-# summary
-def statSummary(data):
-    total_expenditure = data.debit.agg([sum])
-    print('this is the total expenditure: {}'.formart(total_expenditure))
 
 
 # graph1
