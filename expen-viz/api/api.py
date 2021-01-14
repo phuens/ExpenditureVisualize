@@ -52,7 +52,7 @@ def home():
 @app.route("/summary")
 def statSummary():
     """
-    summary of different stats.
+    Summary of different stats.
 
     :return: different statistics
     :parameter: data
