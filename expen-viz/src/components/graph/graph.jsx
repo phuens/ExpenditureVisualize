@@ -57,6 +57,7 @@ function Graph() {
   }
 
   const classes = useStyles();
+  const config = { responsive: true };
   // eslint-disable-next-line no-nested-ternary
   return results.length !== 0 ? (
     <Grid container className={classes.root} spacing={3}>
@@ -75,6 +76,7 @@ function Graph() {
         <Plot
           data={scatterbarDailySumAndAverage.data}
           layout={scatterbarDailySumAndAverage.layout}
+          config={config}
           className={classes.width}
         />
       </Grid>
@@ -90,6 +92,7 @@ function Graph() {
         <Plot
           data={pieDaysExpenditurePieChart.data}
           layout={pieDaysExpenditurePieChart.layout}
+          config={config}
           className={classes.width}
         />
       </Grid>
@@ -97,6 +100,7 @@ function Graph() {
         <Plot
           data={barDayBasedCategoricalExpenditure.data}
           layout={barDayBasedCategoricalExpenditure.layout}
+          config={config}
           className={classes.width}
         />
       </Grid>
@@ -104,6 +108,7 @@ function Graph() {
         <Plot
           data={barCategoricalSumExpenditure.data}
           layout={barCategoricalSumExpenditure.layout}
+          config={config}
           className={classes.width}
         />
       </Grid>
@@ -111,6 +116,7 @@ function Graph() {
         <Plot
           data={pieCategoricalSumExpenditure.data}
           layout={pieCategoricalSumExpenditure.layout}
+          config={config}
           className={classes.width}
         />
       </Grid>

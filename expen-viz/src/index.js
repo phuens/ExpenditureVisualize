@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// eslint-disable-next-line import/no-named-as-default-member
+// eslint-disable-next-line import/no-named-as-default
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';

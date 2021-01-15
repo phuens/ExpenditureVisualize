@@ -156,7 +156,7 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
     layout = go.Layout(
         title_text='Sepnding', yaxis=dict(side='left'),
         yaxis2=dict(overlaying='y', anchor='x',),
-        annotations=[go.layout.Annotation(text='* No average = sum', align='left', showarrow=False, xref='paper', yref='paper', y=1.0291, x=1, width=400, bordercolor='gray', borderwidth=1, opacity=0.5)])  # noqa
+        annotations=[go.layout.Annotation(text='* No average = sum', align='left', showarrow=False, xref='paper', yref='paper', y=1.0291, x=1, width=150, bordercolor='gray', borderwidth=1, opacity=0.5)])  # noqa
     fig = go.Figure(data=data, layout=layout)
     fig.update_layout(legend=dict(
         orientation="h", yanchor="bottom", y=1.025, xanchor="right", x=1))
