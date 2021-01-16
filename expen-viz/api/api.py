@@ -154,7 +154,13 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
     trace2 = go.Bar(x=df['date'], y=df['sum'], name="Sum", opacity=0.5)
     data = [trace1, trace2]
     layout = go.Layout(
-        title_text='Sepnding', yaxis=dict(side='left'),
+        margin=go.layout.Margin(
+            l=20,  # left margin
+            r=20,  # right margin
+            b=20,  # bottom margin
+            t=50  # top margin
+        ),
+        title_text='Sum and Average Daily Spending.', yaxis=dict(side='left'),
         yaxis2=dict(overlaying='y', anchor='x',),
         annotations=[go.layout.Annotation(text='* No average = sum', align='left', showarrow=False, xref='paper', yref='paper', y=1.0291, x=1, width=150, bordercolor='gray', borderwidth=1, opacity=0.5)])  # noqa
     fig = go.Figure(data=data, layout=layout)
@@ -182,7 +188,14 @@ def pieDaysExpenditurePieChart(data, from_date, to_date):
     df["day_of_week"] = df.index
     fig = px.pie(df, values='sum', names='day_of_week', labels="day_of_week",
                  title='Total spending by day of week.', hole=.3)
-    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(
+        margin=go.layout.Margin(
+            l=20,  # left margin
+            r=20,  # right margin
+            b=20,  # bottom margin
+            t=50  # top margin
+        )
+    )
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -199,8 +212,18 @@ def barDayBasedCategoricalExpenditure(data, from_date, to_date):
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
     df = df.loc[(df["category"] != "UNKNOWN") & (df["category"] != "FAMILY") & (df["category"] != "RENT") & (df["category"] != "SALARY") & (df["category"] != "CREDIT") & (df["category"] != "COMPUTER MONITOR") & (df["category"] != "FURNITURE") & (df["category"] != "RETURN") & (df["category"] != "HALF YR.ANNUAL MAINT CHR") & (df["category"] != "INTEREST")]  # noqa
     fig = px.bar(df, x="category", y="debit", barmode="group", facet_col="day",
-                 text="debit", title="Spending based on Days of the week by categories")  # noqa
-    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+                 text="debit", title="Spending Based On Days Of The Week And Categories")  # noqa
+    fig.update_layout(
+        margin=go.layout.Margin(
+            l=20,  # left margin
+            r=20,  # right margin
+            b=20,  # bottom margin
+            t=50  # top margin
+        )
+    )
+    fig.update_xaxes(title_text='')
+    # remove the name day = from the title of the graphs
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -215,8 +238,15 @@ def barCategoricalSumExpenditure(data, from_date, to_date):
     """
     start_date, end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
-    fig = px.bar(df, x="category", y="debit", labels={'debit': 'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])  # noqa
-    # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+    fig = px.bar(df, x="category", y="debit", title="Spending Based On Categories", labels={'debit': 'Expenditure'}, hover_data=['category', 'item', 'date', 'debit', 'balance'])  # noqa
+    fig.update_layout(
+        margin=go.layout.Margin(
+            l=20,  # left margin
+            r=20,  # right margin
+            b=20,  # bottom margin
+            t=50  # top margin
+        )
+    )
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
@@ -238,9 +268,16 @@ def pieCategoricalSumExpenditure(data, from_date, to_date):
     fig = px.pie(df, values='sum', names='category_group',
                  title='Total sum of spending based on Days of the week')
     # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(
+        margin=go.layout.Margin(
+            l=20,  # left margin
+            r=20,  # right margin
+            b=20,  # bottom margin
+            t=50  # top margin
+        )
+    )
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
-    # fig = fig.replace(Figure({'data':)
 
 
 # graph6

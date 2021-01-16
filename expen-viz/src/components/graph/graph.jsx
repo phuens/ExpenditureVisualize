@@ -67,9 +67,9 @@ function Graph() {
       <Grid
         item
         xs={12}
-        md={11}
+        md={12}
         lg={11}
-        sm={11}
+        sm={12}
         className={classes.background}
         style={{ margin: '10px 10px 10px 15px' }}
       >
@@ -83,9 +83,9 @@ function Graph() {
       <Grid
         item
         xs={12}
-        md={4}
+        md={12}
         lg={4}
-        sm={4}
+        sm={12}
         className={classes.background}
         style={{ margin: '10px' }}
       >
@@ -99,9 +99,9 @@ function Graph() {
       <Grid
         item
         xs={12}
-        md={7}
+        md={12}
         lg={7}
-        sm={7}
+        sm={12}
         className={classes.background}
         style={{ margin: '10px' }}
       >
@@ -115,9 +115,9 @@ function Graph() {
       <Grid
         item
         xs={12}
-        md={6}
+        md={12}
         lg={6}
-        sm={6}
+        sm={12}
         className={classes.background}
         style={{ margin: '10px' }}
       >
@@ -131,9 +131,9 @@ function Graph() {
       <Grid
         item
         xs={12}
-        md={5}
+        md={12}
         lg={5}
-        sm={5}
+        sm={12}
         className={classes.background}
         style={{ margin: '10px' }}
       >
