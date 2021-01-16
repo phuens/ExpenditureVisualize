@@ -19,7 +19,7 @@ export default function MaterialUIPickers() {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3} md={3} sm={6}>
           <KeyboardDatePicker
             disableToolbar
             variant="inline"
@@ -34,7 +34,7 @@ export default function MaterialUIPickers() {
             }}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} lg={3} md={3} sm={6}>
           <KeyboardDatePicker
             disableToolbar
             variant="inline"
@@ -49,7 +49,7 @@ export default function MaterialUIPickers() {
             }}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: '28px' }}>
+        <Grid item xs={12} lg={3} md={3} sm={12} style={{ marginTop: '28px' }}>
           <Button variant="outlined" color="secondary">
             Submit
           </Button>
