@@ -61,12 +61,12 @@ function Graph() {
   // eslint-disable-next-line no-nested-ternary
   return results.length !== 0 ? (
     <Grid container className={classes.root} spacing={3}>
-      <Grid item xs={11} md={11} lg={11} sm={11} style={{ margin: '10px 10px 10px 15px' }}>
+      <Grid item xs={11} md={11} lg={11} sm={11} style={{ margin: '60px 10px 10px 15px' }}>
         <DatePicker />
       </Grid>
       <Grid
         item
-        xs={11}
+        xs={12}
         md={11}
         lg={11}
         sm={11}
@@ -82,7 +82,7 @@ function Graph() {
       </Grid>
       <Grid
         item
-        xs={4}
+        xs={12}
         md={4}
         lg={4}
         sm={4}
@@ -96,7 +96,15 @@ function Graph() {
           className={classes.width}
         />
       </Grid>
-      <Grid item xs={7} className={classes.background} style={{ margin: '10px' }}>
+      <Grid
+        item
+        xs={12}
+        md={7}
+        lg={7}
+        sm={7}
+        className={classes.background}
+        style={{ margin: '10px' }}
+      >
         <Plot
           data={barDayBasedCategoricalExpenditure.data}
           layout={barDayBasedCategoricalExpenditure.layout}
@@ -104,7 +112,15 @@ function Graph() {
           className={classes.width}
         />
       </Grid>
-      <Grid item xs={6} className={classes.background} style={{ margin: '10px' }}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        lg={6}
+        sm={6}
+        className={classes.background}
+        style={{ margin: '10px' }}
+      >
         <Plot
           data={barCategoricalSumExpenditure.data}
           layout={barCategoricalSumExpenditure.layout}
@@ -112,7 +128,15 @@ function Graph() {
           className={classes.width}
         />
       </Grid>
-      <Grid item xs={5} className={classes.background} style={{ margin: '10px' }}>
+      <Grid
+        item
+        xs={12}
+        md={5}
+        lg={5}
+        sm={5}
+        className={classes.background}
+        style={{ margin: '10px' }}
+      >
         <Plot
           data={pieCategoricalSumExpenditure.data}
           layout={pieCategoricalSumExpenditure.layout}

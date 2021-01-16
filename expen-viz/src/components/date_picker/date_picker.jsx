@@ -1,6 +1,6 @@
 import 'date-fns';
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Button } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
@@ -48,6 +48,11 @@ export default function MaterialUIPickers() {
               'aria-label': 'change date',
             }}
           />
+        </Grid>
+        <Grid item xs={3} style={{ marginTop: '28px' }}>
+          <Button variant="outlined" color="secondary">
+            Submit
+          </Button>
         </Grid>
       </Grid>
     </MuiPickersUtilsProvider>
