@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
-import Plot from 'react-plotly.js';
+// import Plot from 'react-plotly.js';
 import { makeStyles, Grid } from '@material-ui/core';
 import Data from '../../hook/get_data';
 import DatePicker from '../date_picker/date_picker';
@@ -40,31 +40,46 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Graph() {
-  const [results, errorMessage] = Data();
-  let scatterbarDailySumAndAverage;
-  let pieDaysExpenditurePieChart;
-  let barDayBasedCategoricalExpenditure;
-  let barCategoricalSumExpenditure;
-  let pieCategoricalSumExpenditure;
+  // const [pieDaysExpenditurePieChart, setPieDaysExpenditurePieChart] = useState('');
+  // const [barDayBasedCategoricalExpenditure, setBarDayBasedCategoricalExpenditure] = useState(0);
+  // const [barCategoricalSumExpenditure, setBarCategoricalSumExpenditure] = useState(0);
+  // const [pieCategoricalSumExpenditure, setPieCategoricalSumExpenditure] = useState(0);
 
-  if (results.length !== 0) {
-    // eslint-disable-next-line prefer-destructuring
-    scatterbarDailySumAndAverage = results[0];
-    pieDaysExpenditurePieChart = results[1];
-    barDayBasedCategoricalExpenditure = results[2];
-    barCategoricalSumExpenditure = results[3];
-    pieCategoricalSumExpenditure = results[4];
+  const [searchApi, results, errorMessage] = Data();
+  console.log(results.length);
+  console.log('error message>>>>> ', errorMessage);
+  if (results.length === 5) {
+    // const [scatterbarDailySumAndAverage, setScatterbarDailySumAndAverage] = useState(0);
+    console.log('hello world');
+    // setScatterbarDailySumAndAverage(results[0][0]);
+    // setPieDaysExpenditurePieChart(results[1]);
+    // setBarDayBasedCategoricalExpenditure(results[2]);
+    // setBarCategoricalSumExpenditure(results[3]);
+    // setPieCategoricalSumExpenditure(results[4]);
+    // console.log('pieDaysExpenditurePieChart: ', pieDaysExpenditurePieChart);
+    // console.log('barDayBasedCategoricalExpenditure: ', barDayBasedCategoricalExpenditure);
+    // console.log('pieCategoricalSumExpenditure: ', pieCategoricalSumExpenditure);
+    // console.log('barCategoricalSumExpenditure: ', barCategoricalSumExpenditure);
   }
 
+  // TODO: need to parse the date properly. the wrong date is being passed.
+  const handleCallback = (childData) => {
+    console.log('parsed in handle callback', childData);
+    const fromDate = JSON.stringify(childData[0]).slice(1, 11);
+    const toDate = JSON.stringify(childData[1]).slice(1, 11);
+    console.log('date under the handle call back: ', fromDate, ' - ', toDate);
+    searchApi(fromDate, toDate);
+  };
+
   const classes = useStyles();
-  const config = { responsive: true };
+  // const config = { responsive: true };
   // eslint-disable-next-line no-nested-ternary
   return results.length !== 0 ? (
     <Grid container className={classes.root} spacing={3}>
       <Grid item xs={11} md={11} lg={11} sm={11} style={{ margin: '60px 10px 10px 15px' }}>
-        <DatePicker />
+        <DatePicker passDates={handleCallback} />
       </Grid>
-      <Grid
+      {/* <Grid
         item
         xs={12}
         md={12}
@@ -143,14 +158,7 @@ function Graph() {
           config={config}
           className={classes.width}
         />
-      </Grid>
-    </Grid>
-  ) : errorMessage !== 0 ? (
-    <Grid item xs={12} style={{ margin: '10px' }}>
-      <h3>
-        There has been an issue. The error is:
-        {errorMessage}
-      </h3>
+      </Grid> */}
     </Grid>
   ) : (
     <Grid item xs={12} style={{ margin: '10px', textAlign: 'center' }}>

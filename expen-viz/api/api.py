@@ -26,13 +26,12 @@ def home():
 
     :return: template with all the grpahs.
     """
-    if request.method == 'POST':
-        from_date = request.form['from_date']
-        to_date = request.form['to_date']
-        print("from date: {} and to date: {}".format(from_date, to_date))
-    else:
-        from_date = '2020-01-01'
-        to_date = '2020-12-30'
+    arg_dates = request.get_json()
+    arg_dates = json.loads(arg_dates["body"])
+    from_date = arg_dates["fromDate"]
+    to_date = arg_dates["toDate"]
+    print("from date: {} and to date: {}".format(from_date, to_date))
+    # ----------------------------------------------------------------
     data = readData()
     scatter_bar_daily_sum_and_average = scatterbarDailySumAndAverage(
         data, from_date, to_date)
@@ -128,7 +127,7 @@ def createDataFrame(final_csv):
     data["date"] = pd.to_datetime(data['date']).dt.date
     data = data.sort_values(by=['date'])
     data.to_csv("../data/final/final_data.csv")
-    print("----------------------\n", data.dtypes, "\n----------------------")
+    # print("----------------------\n", data.dtypes, "\n----------------------")
     return data
 
 
