@@ -135,7 +135,7 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
     """
     Total sum and average of spending on a day.
 
-    :return: bargraph and scatter plot
+    :return: bargraph and scatter plot.
     :parameter: data, from_date, to_datea
     """
     start_date, end_date = get_dates(from_date, to_date)
