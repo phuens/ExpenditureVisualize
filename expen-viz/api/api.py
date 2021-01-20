@@ -127,7 +127,6 @@ def createDataFrame(final_csv):
     data["date"] = pd.to_datetime(data['date']).dt.date
     data = data.sort_values(by=['date'])
     data.to_csv("../data/final/final_data.csv")
-    # print("----------------------\n", data.dtypes, "\n----------------------")
     return data
 
 
@@ -137,7 +136,7 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
     Total sum and average of spending on a day.
 
     :return: bargraph and scatter plot
-    :parameter: data, from_date, to_date
+    :parameter: data, from_date, to_datea
     """
     start_date, end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
