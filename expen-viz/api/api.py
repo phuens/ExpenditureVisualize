@@ -186,7 +186,7 @@ def pieDaysExpenditurePieChart(data, from_date, to_date):
     df = df.groupby('day').debit.agg([sum, len]).reindex(day_of_the_week)
     df["day_of_week"] = df.index
     fig = px.pie(df, values='sum', names='day_of_week', labels="day_of_week",
-                 title='Total spending by day of week.', hole=.3)
+                 title='Total Spending By Day Of The Week.', hole=.3)
     fig.update_layout(
         margin=go.layout.Margin(
             l=20,  # left margin
@@ -265,7 +265,7 @@ def pieCategoricalSumExpenditure(data, from_date, to_date):
     df = df.groupby('category').debit.agg([sum, len])
     df["category_group"] = df.index
     fig = px.pie(df, values='sum', names='category_group',
-                 title='Total sum of spending based on Days of the week')
+                 title='Total Spending Based On Categories')
     # fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
     fig.update_layout(
         margin=go.layout.Margin(

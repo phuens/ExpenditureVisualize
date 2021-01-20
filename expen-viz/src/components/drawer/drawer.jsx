@@ -39,12 +39,18 @@ export default function Drawer() {
   return (
     <Grid container spacing={2} style={{ marginTop: '50px' }}>
       <Grid item xs={12} md={12} lg={12} sm={12}>
-        <Grid item xs={6} md={6} lg={6} sm={6} style={{ marginLeft: '70px', marginBottom: '50px' }}>
+        <Grid item xs={6} md={6} lg={6} sm={6} style={{ marginLeft: '70px', marginBottom: '20px' }}>
           <img src={Portrait} alt="self portrait" style={{ width: '100%', borderRadius: '50%' }} />
         </Grid>
       </Grid>
-
       <Grid item xs={12} md={12} lg={12} sm={12}>
+        <ListItem button>
+          <ListItemText style={{ textAlign: 'center' }}>
+            <b style={{ color: '#4050b5' }}>
+              <u>Summary of all the data</u>
+            </b>
+          </ListItemText>
+        </ListItem>
         <ListItem button>
           <ListItemText>
             <b style={{ color: '#4050b5b8' }}>Total Expenditure:</b>
