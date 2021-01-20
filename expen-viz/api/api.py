@@ -141,7 +141,7 @@ def scatterbarDailySumAndAverage(data, from_date, to_date):
     """
     start_date, end_date = get_dates(from_date, to_date)
     df = data.loc[(data['date'] > start_date) & (data['date'] <= end_date)]
-    df = data.groupby('date').debit.agg([sum, min, len])
+    df = df.groupby('date').debit.agg([sum, min, len])
     df['average'] = df['sum']/df['len']
     df['date'] = df.index  # make index to column.
     # not display average when average = sum
