@@ -16,7 +16,7 @@ import json
 #   1. Need to update the daily sum graph based on the dates from user.
 #   2. Need to make the graphs responsive.
 # export FLASK_APP=app.py | RUN THIS BEFORE FLASK RUN
-app = Flask(__name__)
+app = Flask(__name__, static_folder='build/', static_url_path='/')
 
 
 @app.route("/data", methods=['GET', 'POST'])
