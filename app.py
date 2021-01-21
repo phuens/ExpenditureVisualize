@@ -15,7 +15,7 @@ import json
 # TODO:
 #   1. Need to update the daily sum graph based on the dates from user.
 #   2. Need to make the graphs responsive.
-# export FLASK_APP=main.py | RUN THIS BEFORE FLASK RUN
+# export FLASK_APP=app.py | RUN THIS BEFORE FLASK RUN
 app = Flask(__name__)
 
 
@@ -88,9 +88,9 @@ def readData():
     :return: csv
     """
     final_csv = []
-    entries = os.listdir("../data/csv")
+    entries = os.listdir("./data/csv")
     for i in entries:
-        csv_path = os.path.join("../data/csv", i)  # ppath for the csv files
+        csv_path = os.path.join("./data/csv", i)  # ppath for the csv files
         name, extension = os.path.splitext(csv_path)  # check if csv file
         if (extension == ".csv"):
             # panda data frame, engine=python required for unicode issue
@@ -126,7 +126,7 @@ def createDataFrame(final_csv):
     data['day'] = data['date'].dt.day_name()
     data["date"] = pd.to_datetime(data['date']).dt.date
     data = data.sort_values(by=['date'])
-    data.to_csv("../data/final/final_data.csv")
+    data.to_csv("./data/final/final_data.csv")
     return data
 
 
