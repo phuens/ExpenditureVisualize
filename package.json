@@ -15,15 +15,17 @@
     "clsx": "^1.1.1",
     "cors": "^2.8.5",
     "date-fns": "2.8.1",
+    "express": "^4.17.1",
     "plotly.js": "^1.58.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-plotly.js": "^2.5.1",
     "react-scripts": "4.0.1",
+    "serve-static": "^1.14.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "start-api": "venv/bin/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
