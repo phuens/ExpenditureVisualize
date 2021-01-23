@@ -8,7 +8,7 @@ const Data = () => {
   const searchApi = async (fromDate, toDate) => {
     console.log('date being passed: ', fromDate, 'and', toDate);
     try {
-      const response = await axios.post('/data', {
+      const response = await axios.post('http://127.0.0.1:5000/data', {
         head: 'Application/json',
         body: JSON.stringify({ fromDate, toDate }),
       });

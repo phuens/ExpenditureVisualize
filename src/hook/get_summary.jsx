@@ -7,7 +7,7 @@ const SummaryData = () => {
 
   const searchApi = async () => {
     try {
-      const response = await axios.get('/summary', {});
+      const response = await axios.get('http://127.0.0.1:5000/summary', {});
       const summaryResult = response.data;
       setResults(summaryResult);
     } catch (err) {

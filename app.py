@@ -11,12 +11,14 @@ import plotly.graph_objects as go
 import plotly
 import datetime
 import json
+from flask_cors import CORS
 
 # TODO:
 #   1. Need to update the daily sum graph based on the dates from user.
 #   2. Need to make the graphs responsive.
 # export FLASK_APP=app.py | RUN THIS BEFORE FLASK RUN
 app = Flask(__name__, static_folder='build/', static_url_path='/')
+CORS(app)
 
 
 @app.route("/data", methods=['GET', 'POST'])
