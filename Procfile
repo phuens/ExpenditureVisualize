@@ -1,2 +1,2 @@
 web: gunicorn app:app
-app: yarn start
+web: node index.js
